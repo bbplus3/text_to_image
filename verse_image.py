@@ -3,10 +3,8 @@ import pandas as pd
 import warnings
 import streamlit as st
 from diffusers import StableDiffusionPipeline
+from huggingface_hub import hf_hub_download
 import torch
-torch.classes.__path__ = []  # Neutralizes the path inspection
-import os
-os.environ["STREAMLIT_SERVER_ENABLE_FILE_WATCHER"] = "false"  # Disables problematic inspection
 
 warnings.filterwarnings('ignore')
 
@@ -78,13 +76,13 @@ if submitted:
     if not selected_verses.empty:
         passage = ' '.join(selected_verses['t'].tolist())
         truncated_passage = passage[:300]  # Limit length for safety
-        prompt = f"{truncated_passage}, style: {style}"
+        prompt = f"A child with dark hair, olive skin, and green eyes. {truncated_passage}, style: {style}"
 
         width, height = map(int, resolution.split("x"))
 
         st.write(f"**Input Passage:** {passage}")
         st.write("### 🖼️ Generated Image:")
         image = pipe(prompt, height=height, width=width).images[0]
-        st.image(image, use_column_width=True)
+        st.image(image, use_container_width=True)
     else:
         st.write("Passage not found.")
