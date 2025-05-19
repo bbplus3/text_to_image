@@ -83,6 +83,6 @@ if submitted:
         st.write(f"**Input Passage:** {passage}")
         st.write("### 🖼️ Generated Image:")
         image = pipe(prompt, height=height, width=width).images[0]
-        st.image(image, use_container_width=True)
+        st.image(image, width=600)
     else:
         st.write("Passage not found.")
